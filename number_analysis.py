@@ -1,31 +1,39 @@
 def prime_factors(n):
+    """Returns the list of prime factors of a given number."""
     factors = []
-    # بررسی عدد 2 به طور جداگانه
+    
+    # Check for factor of 2
     while n % 2 == 0:
         factors.append(2)
-        n = n // 2
-    
-    # بررسی اعداد فرد
-    divisor = 3
-    while divisor * divisor <= n:
+        n //= 2
+
+    # Check for odd factors
+    for divisor in range(3, int(n ** 0.5) + 1, 2):
         while n % divisor == 0:
             factors.append(divisor)
-            n = n // divisor
-        divisor += 2  # فقط اعداد فرد را بررسی کنید
+            n //= divisor
 
-    # اگر عدد باقیمانده خود عدد اول باشد
     if n > 1:
         factors.append(n)
 
     return factors
 
-# دریافت ورودی از کاربر
-number = int(input("Enter a number to factorize: "))
-if number <= 0:
-    print("Please enter a positive integer greater than 1.")
-else:
-    result = prime_factors(number)
-    if len(result) == 1:
-        print ('عدد وارد شده یک عدد اول است')
-    else:
+def main():
+    try:
+        number = int(input("Enter a number to factorize: "))
+        if number <= 1:
+            print("Please enter an integer greater than 1.")
+            return
+
+        result = prime_factors(number)
         print(f"The prime factors of {number} are: {result}")
+
+        # اگر فقط یک فاکتور داشت، یعنی عدد ورودی اول است
+        if len(result) == 1:
+            print("This number is a prime number.")
+
+    except ValueError:
+        print("Invalid input! Please enter a valid integer.")
+
+if __name__ == "__main__":
+    main()
